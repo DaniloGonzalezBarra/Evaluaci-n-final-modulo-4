@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <button onclick="app.listarNombres()">Buscar nombres</button>
+  <button onclick="app.buscarBasico()">Buscar básico</button>
+  <button onclick="app.buscarDireccion()">Buscar dirección</button>
+  <button onclick="app.buscarAvanzado()">Buscar avanzado</button>
+  <button onclick="app.listarCompanias()">Listar compañías</button>
+  <button onclick="app.listarOrdenados()">Nombres ordenados</button>
+
+<script>
+class AdminUsuarios {
+  constructor() {
+    this.users = [];
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://jsonplaceholder.typicode.com/users', true);
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        this.users = JSON.parse(xhr.responseText);
+        console.log('Datos cargados:', this.users.length, 'usuarios');
+      }
+    };
+    xhr.send();
+  }
+
+  listarNombres() {
+    this.users.forEach(u => console.log(u.name));
+  }
+
+  buscarBasico() {
+    const nombre = prompt('Ingresa el nombre del usuario:');
+    const user = this.users.find(u => u.name.toLowerCase() === nombre.toLowerCase());
+    if(user) console.log('Username:', user.username, 'Email:', user.email);
+    else console.log('Usuario no encontrado');
+  }
+
+  buscarDireccion() {
+    const nombre = prompt('Ingresa el nombre del usuario:');
+    const user = this.users.find(u => u.name.toLowerCase() === nombre.toLowerCase());
+    if(user) console.log('Dirección:', user.address);
+    else console.log('Usuario no encontrado');
+  }
+
+  buscarAvanzado() {
+    const nombre = prompt('Ingresa el nombre del usuario:');
+    const user = this.users.find(u => u.name.toLowerCase() === nombre.toLowerCase());
+    if(user) console.log('Teléfono:', user.phone, 'Web:', user.website, 'Empresa:', user.company);
+    else console.log('Usuario no encontrado');
+  }
+
+  listarCompanias() {
+    this.users.forEach(u => console.log(u.company.name, '-', u.company.catchPhrase));
+  }
+
+  listarOrdenados() {
+    const nombres = this.users.map(u => u.name).sort();
+    nombres.forEach(n => console.log(n));
+  }
+}
+
+const app = new AdminUsuarios();
+</script>
+</body>
+</html>
